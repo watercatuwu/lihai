@@ -12,14 +12,34 @@ import '@fontsource-variable/raleway';
 		<title>MECHA LIHAI</title>
 	</head>
 	<body>
-		<div class="w-screen h-dvh bg-yellow-300">
-			<div class="h-full flex justify-center items-center gap-4 text-[8vw]">
+		<div id="start"></div>
+		<div class="w-screen h-dvh">
+			<div id="section1" class="h-full flex items-center justify-center gap-4 text-[8vw] bg-yellow-300">
 				<img id="logo" src="/lhai_hollow.svg" class="w-[2em] h-[2em]">
 				<div class="relative overflow-hidden">
-				<h1 id="title" class="uppercase font-black leading-none">
-					mecha<br>
-					lihai
-				</h1>
+					<h1 id="title" class="uppercase font-black leading-none h-[16vw]">
+						mecha<br>lihai
+						<div class="overflow-hidden">
+							<p id="textbox" class="h-[8-vw]">
+								club<br>
+								esports<br>
+								design<br>
+								universe
+							</p>
+						</div>
+					</h1>
+				</div>
+			</div>
+
+			<div id="section2" class="h-full flex flex-col justify-center items-center gap-4 bg-violet-300">
+				<h1 class="text-[8vw] font-black">Who are we?</h1>
+				<p id="about_text"  class="text-2xl">idk. but we are so lihai.</p>
+			</div>
+
+			<div id="section3" class="h-full flex flex-col justify-center items-center gap-4 bg-slate-300">
+				<h1 class="text-[8vw] font-black">Any thing else?</h1>
+				<p id="footer_text"  class="text-2xl">no. WIP :)</p>
+				<a id="backtop" href="#start" class="underline text-blue-400 text-2xl cursor-point">back to top</a>
 			</div>
 		</div>
 	</body>
@@ -28,18 +48,58 @@ import '@fontsource-variable/raleway';
 
 <script>
 import { gsap } from "gsap";
-const tl = gsap.timeline({repeat:-1, repeatDelay: .5});
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
+const sec1_tl = gsap.timeline({
+	scrollTrigger: {
+		trigger: "#section1",
+		start: "top top",
+		scrub: 1,
+		end: `+=3400`,
+		markers: true,
+		pin: true
+	}
+});
 const logo = document.getElementById("logo");
 const rect = logo.getBoundingClientRect();
 
 const startX = window.innerWidth/2 - (rect.left + rect.width/2);
 
 const title = document.getElementById("title");
-tl.set(logo, { x:startX, scale:0, rotate: -360 })
-tl.to(logo, { scale: 1, rotate:0, duration: 1, ease: "power1.inOut" })
-tl.to(logo, { x: 0, duration: 1, ease: "power1.inOut" })
-tl.from(title, { x: "-100%", duration: 1, ease: "power1.inOut" })
-tl.to(title, { x: "-100%", duration: 1, delay: 2, ease: "power1.inOut" })
-tl.to(logo, { x: startX, duration: 1, ease: "power1.inOut" })
-tl.to(logo, { scale: 0, rotate: -360, duration: 1, ease: "power1.inOut" })
+sec1_tl.set(logo, { x:startX, scale:0.5, rotate: -360 })
+sec1_tl.to(logo, { scale: 1, rotate:0, duration: 1, ease: "power1.inOut" })
+sec1_tl.to(logo, { x: 0, duration: 1, ease: "power1.inOut" })
+sec1_tl.from(title, { x: "-100%", duration: 1, ease: "power1.inOut" })
+sec1_tl.to(title, { y: "-50%", duration: 1, ease: "power1.inOut" })
+for (let i = 1; i < 3; i++) {
+  sec1_tl.to("#textbox", { y: "-24vw", duration: 1, ease: "power1.inOut" });
+}
+
+const sec2_tl = gsap.timeline({
+	scrollTrigger: {
+		trigger: "#section2",
+		start: "top top",
+		scrub: 1,
+		end: `+=500`,
+		markers: true,
+		pin: true
+	}
+});
+
+sec2_tl.from("#about_text", {opacity:0, duration: 1, ease: "power1.inOut" })
+
+const sec3_tl = gsap.timeline({
+	scrollTrigger: {
+		trigger: "#section3",
+		start: "top top",
+		scrub: 1,
+		end: `+=500`,
+		markers: true,
+		pin: true
+	}
+});
+
+sec3_tl.from("#footer_text", {opacity:0, duration: 1, ease: "power1.inOut" })
+sec3_tl.from("#backtop", {opacity:0, duration: 1, ease: "power1.inOut" })
 </script>
