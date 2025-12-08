@@ -1,4 +1,5 @@
 ---
+import Logo from "../../components/logo.astro";
 import "../styles/global.css";
 import '@fontsource-variable/raleway';
 ---
@@ -12,34 +13,50 @@ import '@fontsource-variable/raleway';
 		<title>MECHA LIHAI</title>
 	</head>
 	<body>
-		<div id="start"></div>
+		<nav id="menu" class="fixed bottom-0 left-0 right-0 w-full flex justify-center items-center text-start h-24 px-4 mb-4 hidden" style="opacity: 0">
+			<ul class="grid grid-cols-1 h-full gap-4 font-bold text-3xl">
+				<li class="group cursor-pointer" style="color: #F2DE33">
+					<span class="group-hover:hidden transition">-</span> 
+					<span class="hidden group-hover:inline-block transition">></span> 
+					<span class="group-hover:underline transition">About Us</span>
+				</li>
+				<li class="group cursor-pointer" style="color: #FF325B">
+					<span class="group-hover:hidden transition">-</span> 
+					<span class="hidden group-hover:inline-block transition">></span> 
+					<span class="group-hover:underline transition">Works</span>
+				</li>
+				<li class="group cursor-pointer" style="color: #2FD9F5">
+					<span class="group-hover:hidden transition">-</span> 
+					<span class="hidden group-hover:inline-block transition">></span> 
+					<span class="group-hover:underline transition">Friends</span>
+				</li>
+				<li class="group cursor-pointer" style="color: #E27EFE">
+					<span class="group-hover:hidden transition">-</span> 
+					<span class="hidden group-hover:inline-block transition">></span> 
+					<span class="group-hover:underline transition">Social Media</span>
+				</li>
+			</ul>
+		</nav>
 		<div class="w-screen h-screen">
-			<div id="section1" class="h-full flex items-center justify-center gap-4 text-[8vw] bg-yellow-300">
-				<img id="logo" src="/lhai_hollow.svg" class="w-[2em] h-[2em]">
-				<div class="relative overflow-hidden">
-					<h1 id="title" class="uppercase font-black leading-none h-[16vw]">
-						mecha<br>lihai
-						<div class="overflow-hidden">
-							<p id="textbox" class="h-[8-vw]">
-								club<br>
-								esports<br>
-								design<br>
-								universe
-							</p>
-						</div>
-					</h1>
+			<div id="section1" class="h-full flex justify-center items-center text-[8vw] p-8">
+				<div id="logobox" class="flex gap-4">
+					<div id="logo">
+						<Logo class="w-[2em] h-[2em]" />
+					</div>
+					<div class="relative overflow-hidden">
+						<h1 id="title" class="uppercase font-black leading-none h-[16vw]">
+							mecha<br>lihai
+							<div class="overflow-hidden">
+								<p id="textbox" class="h-[8-vw]">
+									<span style="-webkit-text-stroke: 0.01em #F2DE33">club</span><br>
+									<span style="-webkit-text-stroke: 0.01em #FF325B">esports</span><br>
+									<span style="-webkit-text-stroke: 0.01em #2FD9F5">design</span><br>
+									<span id="universe" style="-webkit-text-stroke: 0.01em #E27EFE">universe</span>
+								</p>
+							</div>
+						</h1>
+					</div>
 				</div>
-			</div>
-
-			<div id="section2" class="h-full flex flex-col justify-center items-center gap-4 bg-violet-300">
-				<h1 class="text-[8vw] font-black">Who are we?</h1>
-				<p id="about_text"  class="text-2xl">idk. but we are so lihai.</p>
-			</div>
-
-			<div id="section3" class="h-full flex flex-col justify-center items-center gap-4 bg-slate-300">
-				<h1 class="text-[8vw] font-black">Any thing else?</h1>
-				<p id="footer_text"  class="text-2xl">no. WIP :)</p>
-				<a id="backtop" href="#start" class="underline text-blue-400 text-2xl cursor-point">back to top</a>
 			</div>
 		</div>
 	</body>
@@ -51,52 +68,60 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-const sec1_tl = gsap.timeline({
-	scrollTrigger: {
-		trigger: "#section1",
-		start: "top top",
-		scrub: 1,
-		end: `+=3400`,
-		pin: true
-	}
-});
+const sec1_tl = gsap.timeline({});
 const logo = document.getElementById("logo");
 const rect = logo.getBoundingClientRect();
-
 const startX = window.innerWidth/2 - (rect.left + rect.width/2);
 
 const title = document.getElementById("title");
 sec1_tl.set(logo, { x:startX, scale:0.5, rotate: -360 })
-sec1_tl.to(logo, { scale: 1, rotate:0, duration: 1, ease: "power1.inOut" })
+sec1_tl.to(logo, { scale: 1, rotate:0, duration: 0.5, ease: "power1.inOut" })
 sec1_tl.to(logo, { x: 0, duration: 1, ease: "power1.inOut" })
 sec1_tl.from(title, { x: "-100%", duration: 1, ease: "power1.inOut" })
 sec1_tl.to(title, { y: "-50%", duration: 1, ease: "power1.inOut" })
 for (let i = 1; i < 3; i++) {
   sec1_tl.to("#textbox", { y: "-24vw", duration: 1, ease: "power1.inOut" });
 }
+sec1_tl.to(title, { color: "#FFF", duration: .5, ease: "power1.inOut" })
+sec1_tl.to("#textbox", { color: "#ff79b8", duration: .5, ease: "power1.inOut" }, "<")
+sec1_tl.to("#universe", { webkitTextStrokeWidth: "0", duration: .5, ease: "power1.inOut" }, "<")
+sec1_tl.to("#logobox", { y: "-15vh", duration: 2, ease: "power1.inOut" }, "<")
+sec1_tl.set("#menu", { display: "flex" }, "<")
+sec1_tl.to("#menu", { y: "-20vh", opacity:1, duration: 2, ease: "power1.inOut" }, "<0.25")
 
-const sec2_tl = gsap.timeline({
-	scrollTrigger: {
-		trigger: "#section2",
-		start: "top top",
-		scrub: 1,
-		end: `+=500`,
-		pin: true
-	}
+const items = document.querySelectorAll("#menu li");
+const itemsColor = [
+	"#F2DE33",
+	"#FF325B",
+	"#2FD9F5",
+	"#E27EFE"
+]
+
+items.forEach((li, k) => {
+  li.addEventListener("mouseenter", () => {
+    gsap.to(logo, { fill: itemsColor[k], duration: 0.3 });
+	gsap.to("#textbox", { color: itemsColor[k], duration: 0.3 });
+  });
+
+  li.addEventListener("mouseleave", () => {
+    gsap.to(logo, { fill: "#fff", duration: 0.3 });
+	gsap.to("#textbox", { color: "#ff79b8", duration: 0.3 });
+  });
 });
-
-sec2_tl.from("#about_text", {opacity:0, duration: 1, ease: "power1.inOut" })
-
-const sec3_tl = gsap.timeline({
-	scrollTrigger: {
-		trigger: "#section3",
-		start: "top top",
-		scrub: 1,
-		end: `+=500`,
-		pin: true
-	}
-});
-
-sec3_tl.from("#footer_text", {opacity:0, duration: 1, ease: "power1.inOut" })
-sec3_tl.from("#backtop", {opacity:0, duration: 1, ease: "power1.inOut" })
+console.log(items)
 </script>
+
+<style>
+#section1 {
+	background-color: #483F43;
+}
+
+#logobox {
+	color: rgba(0,0,0,0);
+	fill: #FFF;
+}
+
+#title {
+	-webkit-text-stroke: 0.01em #fff;
+}
+</style>
